@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+.testvenv/
+.idea/
+.vscode/
+.DS_Store
+data/collected_jobs.json
+output/*.xlsx
+!output/job_roles_130.xlsx

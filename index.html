@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Role Finder</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Job Role Finder home">
+      <span class="brand-mark">JF</span>
+      <span>Job Role Finder</span>
+    </a>
+    <nav><a href="#catalogue">Role catalogue</a><a href="#collector">30-day jobs</a></nav>
+    <span class="local-badge">Local application</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">CAREER EXPLORATION TOOL</p>
+      <h1>Find a role that matches your direction</h1>
+      <p class="hero-copy">Explore <span id="heroTotal">520</span> unique job roles across major industries. Search by title or skill, then narrow the list using practical filters.</p>
+      <div class="search-wrap">
+        <label class="sr-only" for="search">Search roles</label>
+        <input id="search" type="search" placeholder="Try cybersecurity, Python, designer..." autocomplete="off">
+        <button id="searchButton" type="button">Search roles</button>
+      </div>
+    </section>
+
+    <section id="catalogue" class="workspace" aria-label="Job role catalogue">
+      <aside class="filters">
+        <div class="filter-heading">
+          <h2>Filters</h2>
+          <button id="clearFilters" class="text-button" type="button">Clear all</button>
+        </div>
+
+        <label for="category">Category</label>
+        <select id="category">
+          <option value="">All categories</option>
+        </select>
+
+        <label for="level">Career level</label>
+        <select id="level">
+          <option value="">All levels</option>
+        </select>
+
+        <label for="workMode">Work mode</label>
+        <select id="workMode">
+          <option value="">All work modes</option>
+        </select>
+
+        <div class="privacy-note">
+          <strong>Private by design</strong>
+          <span>The catalogue runs on this computer and makes no external requests.</span>
+        </div>
+      </aside>
+
+      <section class="results">
+        <div class="results-heading">
+          <div>
+            <p class="eyebrow">ROLE CATALOGUE</p>
+            <h2 id="resultTitle">All job roles</h2>
+          </div>
+          <span id="resultCount" aria-live="polite">Loading...</span>
+        </div>
+        <div id="jobGrid" class="job-grid"></div>
+        <div id="emptyState" class="empty-state" hidden>
+          <h3>No matching roles</h3>
+          <p>Try a broader search or clear one of the filters.</p>
+        </div>
+      </section>
+    </section>
+
+    <section id="collector" class="collector">
+      <div class="collector-intro">
+        <p class="eyebrow">VERIFIED RECENT JOBS</p>
+        <h2>Jobs posted in the last 30 days</h2>
+        <p>Search supported public feeds, open 30-day searches on major job platforms, or import dated CSV/JSON records. Older and undated jobs are rejected automatically.</p>
+      </div>
+      <div class="collector-controls">
+        <label for="publicQuery">Role or keyword</label>
+        <input id="publicQuery" placeholder="Leave blank to search all departments">
+        <label for="publicLocation">Candidate location</label>
+        <input id="publicLocation" value="India">
+        <label for="publicSource">Public source</label>
+        <select id="publicSource"><option value="all">All supported feeds</option><option value="remotive">Remotive</option><option value="remoteok">Remote OK</option><option value="arbeitnow">Arbeitnow</option><option value="jobicy">Jobicy</option><option value="himalayas">Himalayas</option></select>
+        <button id="publicSearch" class="primary-button" type="button">Search last 30 days</button>
+        <label class="file-button" for="jobFile">Import CSV or JSON</label>
+        <input id="jobFile" type="file" accept=".csv,.json,application/json,text/csv" hidden>
+      </div>
+      <p id="collectorStatus" class="collector-status" aria-live="polite">Only jobs with a verifiable posting date within the last 30 days are saved.</p>
+      <div class="platform-searches" aria-label="Search major job platforms">
+        <div><strong>Search job platforms</strong><span>These buttons open each platform's own 30-day search. Login may be required.</span></div>
+        <div id="platformLinks" class="platform-links"></div>
+      </div>
+      <div class="collector-actions">
+        <strong id="searchJobCount">No search performed</strong>
+        <button id="saveSearchResults" type="button" disabled>Save displayed rows</button>
+        <a class="export-button" href="/api/collected-jobs/export.xlsx">Download Excel</a>
+      </div>
+      <div class="table-scroll">
+        <table class="opening-table">
+          <thead><tr><th>Job title</th><th>Company</th><th>Location</th><th>Posted</th><th>Skills</th><th>Type</th><th>Source</th><th>Application</th></tr></thead>
+          <tbody id="openingRows"><tr><td colspan="8">Search supported feeds, open a platform, or import a dated file.</td></tr></tbody>
+        </table>
+      </div>
+      <p class="collection-total">Verified jobs from the last 30 days: <strong id="collectionTotal">0 rows</strong></p>
+    </section>
+  </main>
+
+  <dialog id="jobDialog">
+    <button id="closeDialog" class="dialog-close" aria-label="Close details">×</button>
+    <div id="dialogContent"></div>
+  </dialog>
+
+  <footer>Job Role Finder · Expandable local catalogue</footer>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
