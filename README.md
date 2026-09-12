@@ -62,6 +62,10 @@ Only rows dated within the rolling last 30 days are appended. Re-running the com
 
 Keep the command window open while demonstrating the project. Press `Ctrl+C` to stop it.
 
+### Download the packaged Windows tool
+
+Open the repository's **Actions** tab, select **Build Windows Tool**, open the latest successful run, and download the `JobRoleFinder-Windows` artifact. Extract it and run `JobRoleFinder.exe`. The tool opens automatically in the default browser; keep its command window open while using it.
+
 ## Manual setup
 
 ```bash

@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from xml.sax.saxutils import escape as xml_escape
 import csv
+import gzip
 import html
 import io
 import json
@@ -18,7 +19,9 @@ import xlsxwriter
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_FILE = BASE_DIR / "data" / "jobs.json"
+DATA_GZIP_FILE = BASE_DIR / "data" / "jobs.json.gz"
 COLLECTED_FILE = BASE_DIR / "data" / "collected_jobs.json"
+COLLECTED_GZIP_FILE = BASE_DIR / "data" / "collected_jobs.json.gz"
 PUBLIC_SOURCES = {
     "remotive": "https://remotive.com/api/remote-jobs",
     "remoteok": "https://remoteok.com/api",
@@ -62,7 +65,10 @@ INDIA_LOCATION_TERMS = {
 }
 
 def load_jobs():
-    return json.loads(DATA_FILE.read_text(encoding="utf-8"))
+    if DATA_FILE.exists():
+        return json.loads(DATA_FILE.read_text(encoding="utf-8"))
+    with gzip.open(DATA_GZIP_FILE, "rt", encoding="utf-8") as handle:
+        return json.load(handle)
 
 def filter_jobs(jobs, query="", category="", level="", work_mode=""):
     query = query.strip().lower()
@@ -87,7 +93,13 @@ def clean_text(value):
 
 def load_collected():
     if not COLLECTED_FILE.exists():
-        return []
+        if not COLLECTED_GZIP_FILE.exists():
+            return []
+        try:
+            with gzip.open(COLLECTED_GZIP_FILE, "rt", encoding="utf-8") as handle:
+                return recent_jobs(deduplicate_rows(json.load(handle)))
+        except (json.JSONDecodeError, OSError, ValueError) as error:
+            raise RuntimeError(f"Could not read bundled job collection: {error}") from error
     try:
         rows = json.loads(COLLECTED_FILE.read_text(encoding="utf-8"))
         if not isinstance(rows, list):
