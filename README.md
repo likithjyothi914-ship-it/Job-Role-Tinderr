@@ -1,6 +1,10 @@
-# Job Role Finder
+# Job Role Tinderr
 
-Job Role Finder is a Python project that searches public job openings and creates a persistent Excel workbook with one unique opening per row. It also includes a local browser interface for exploring 520 deduplicated job roles and collecting records interactively.
+## Live Tool
+
+**Open the application:** [Job Role Tinderr](https://laikishjobroletinderr.s.gy/cnx2Y4)
+
+Job Role Tinderr is a Python project that searches public job openings and creates a persistent Excel workbook with one unique opening per row. It also includes a local browser interface for exploring 520 deduplicated job roles and collecting records interactively.
 
 ## Primary output
 
@@ -139,7 +143,7 @@ The repository includes `.gitignore`, a license, documentation and tests. The de
 ```bash
 git init
 git add .
-git commit -m "Add Job Role Finder and Excel collector"
+git commit -m "Add Job Role Tinderr and Excel collector"
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/job-role-finder.git
 git push -u origin main
